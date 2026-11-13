@@ -44,6 +44,25 @@ def add_student(students):
     print(f"Added {name}.\n")
 
 
+# Task 2: functions
+def average(student):
+    """Return the mean of the three scores."""
+    total = student["aptitude"] + student["verbal"] + student["coding"]
+    return total / 3
+
+
+def grade(avg):
+    """Return a grade for an average: A, B, C or 'Needs practice'."""
+    if avg >= 80:
+        return "A"
+    elif avg >= 60:
+        return "B"
+    elif avg >= 40:
+        return "C"
+    else:
+        return "Needs practice"
+
+
 if __name__ == "__main__":
     add_student(students)
     print("Total students:", len(students))
