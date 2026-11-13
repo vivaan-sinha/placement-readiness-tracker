@@ -44,6 +44,65 @@ def add_student(students):
     print(f"Added {name}.\n")
 
 
+# Task 2: functions
+def average(student):
+    """Return the mean of the three scores."""
+    total = student["aptitude"] + student["verbal"] + student["coding"]
+    return total / 3
+
+
+def grade(avg):
+    """Return a grade for an average: A, B, C or 'Needs practice'."""
+    if avg >= 80:
+        return "A"
+    elif avg >= 60:
+        return "B"
+    elif avg >= 40:
+        return "C"
+    else:
+        return "Needs practice"
+
+
+def top_scorer(students):
+    """Return the student with the highest average."""
+    best = students[0]
+    for s in students:
+        if average(s) > average(best):
+            best = s
+    return best
+
+
+def needs_practice(students, limit=40):
+    """Return the students whose average is below limit (default 40)."""
+    weak = []
+    for s in students:
+        if average(s) < limit:
+            weak.append(s)
+    return weak
+
+
+def print_table(students):
+    """Print a neatly formatted result table."""
+    line = "-" * 74
+    print(line)
+    print(f"{'Roll No':<10}{'Name':<16}{'Apt':>5}{'Verb':>6}{'Code':>6}{'Avg':>8}   Grade")
+    print(line)
+    for s in students:
+        avg = average(s)
+        print(f"{s['roll_no']:<10}{s['name']:<16}{s['aptitude']:>5}{s['verbal']:>6}"
+              f"{s['coding']:>6}{avg:>8.2f}   {grade(avg)}")
+    print(line)
+
+
 if __name__ == "__main__":
     add_student(students)
-    print("Total students:", len(students))
+    print_table(students)
+    best = top_scorer(students)
+    print(f"\nTop scorer: {best['name']} ({average(best):.2f})")
+    print("Needs extra practice:")
+    weak = needs_practice(students)
+    if weak:
+        for s in weak:
+            print(f"  - {s['name']} ({s['roll_no']}) avg {average(s):.2f}")
+    else:
+        print("  None")
